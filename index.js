@@ -1,29 +1,26 @@
 const MoviesModel = require("./database/movies");
 const UsersModel = require("./database/users");
-
-
+require('dotenv').config()
+const express = require("express");
+var cors = require('cors');
+const app = express();
+app.use(cors());
+app.use(express.json())
 
 const mongoose = require('mongoose');
-const dbUrl = 'mongodb+srv://swapnil30901:swapnil321@cluster0.ue3ifjw.mongodb.net/bookmyshow?retryWrites=true&w=majority';
+
+const mongoDB = process.env.MONGODB_URI;
 const connectionParams = {
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
 
-mongoose.connect(dbUrl, connectionParams).then(()=>{
+mongoose.connect(mongoDB, connectionParams).then(()=>{
     console.log("Connected to the DB");
 })
 .catch((e) => {
     console.log("Error:", e)
 });
-
-const express = require("express");
-
-var cors = require('cors');
-
-const app = express();
-app.use(cors());
-app.use(express.json())
 
 app.get('/' , (req,res) => {
     return res.json({"WELCOME": `to my Backend Software for the Book Company` });
